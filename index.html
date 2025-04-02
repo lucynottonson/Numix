@@ -10,5 +10,19 @@
         <link rel="stylesheet" href="styles.css">
     </head>
      <body>
+        <div id="navbar"></div>
+
+        <script>
+        fetch('navbar.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('navbar').innerHTML = html;
+
+                const navbarElement = document.querySelector('.navbar');
+                if (navbarElement) {
+                    document.body.style.paddingTop = navbarElement.offsetHeight + 'px';
+                }
+            });
+        </script>
         <h1>test</h1>
      </body>
