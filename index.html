@@ -1,28 +1,47 @@
 <!DOCTYPE html>
+<html>
+<head>
+  <title>Alcohol Calculator</title>
+  <style>
+    body { font-family: Arial; padding: 20px; max-width: 500px; margin: auto; }
+    label, input { display: block; margin: 10px 0; }
+    input[type=number] { width: 100px; }
+    #result { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
 
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Numix</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="styles.css">
-    </head>
-     <body>
-        <div id="navbar"></div>
+  <h2>Alcohol Shot Calculator</h2>
 
-        <script>
-        fetch('navbar.html')
-            .then(res => res.text())
-            .then(html => {
-                document.getElementById('navbar').innerHTML = html;
+  <label for="abv">ABV (%):</label>
+  <input type="number" id="abv" step="0.1" min="0" max="100">
 
-                const navbarElement = document.querySelector('.navbar');
-                if (navbarElement) {
-                    document.body.style.paddingTop = navbarElement.offsetHeight + 'px';
-                }
-            });
-        </script>
-        <h1>test</h1>
-     </body>
+  <label for="volume">Volume (oz):</label>
+  <input type="number" id="volume" step="0.1" min="0">
+
+  <button onclick="calculateShots()">Calculate Shots</button>
+
+  <div id="result"></div>
+
+  <script>
+    function calculateShots() {
+      const abv = parseFloat(document.getElementById('abv').value) / 100;
+      const volume = parseFloat(document.getElementById('volume').value);
+
+      if (isNaN(abv) || isNaN(volume) || abv <= 0 || volume <= 0) {
+        document.getElementById('result').innerText = "Please enter valid numbers.";
+        return;
+      }
+
+      const standardShotAlcohol = 1.5 * 0.40;
+      const drinkAlcohol = volume * abv;
+
+      const shotsEquivalent = drinkAlcohol / standardShotAlcohol;
+
+      document.getElementById('result').innerText =
+        `That's equivalent to about ${shotsEquivalent.toFixed(2)} shot(s) of vodka.`;
+    }
+  </script>
+
+</body>
+</html>
